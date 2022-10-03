@@ -12,8 +12,6 @@ import java.util.ArrayList;
 public class CustomFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
-
         var username = servletRequest.getParameter("username");
         var password = servletRequest.getParameter("password");
         if(username != null && password != null) {
