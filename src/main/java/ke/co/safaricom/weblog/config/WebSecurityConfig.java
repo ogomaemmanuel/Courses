@@ -1,6 +1,6 @@
 package ke.co.safaricom.weblog.config;
 
-import ke.co.safaricom.weblog.middleware.CustomFilter;
+import ke.co.safaricom.weblog.middleware.JwtTokenFilter;
 import ke.co.safaricom.weblog.user.service.UserDetailsExtra;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,10 +19,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsExtra userDetailsExtra;
 
-    private final CustomFilter customFilter;
-    public WebSecurityConfig(UserDetailsExtra userDetailsExtra, CustomFilter customFilter) {
+    private final JwtTokenFilter jwtTokenFilter;
+    public WebSecurityConfig(UserDetailsExtra userDetailsExtra, JwtTokenFilter jwtTokenFilter) {
         this.userDetailsExtra = userDetailsExtra;
-        this.customFilter = customFilter;
+
+        this.jwtTokenFilter = jwtTokenFilter;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/blogs/**").hasAuthority("member")
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(customFilter,BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtTokenFilter,BasicAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().httpBasic();
     }
