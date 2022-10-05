@@ -72,7 +72,7 @@ public class AuthenticationController {
         }
     }
     private String generateAccessToken(String username) {
-        var expirationTime= Date.from( Instant.now().plusSeconds(120));
+        var expirationTime= Date.from( Instant.now().plusSeconds(3600));
         String token = generateToken(jwtSecret, username, expirationTime);
         return token;
     }

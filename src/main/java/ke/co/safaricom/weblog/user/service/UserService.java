@@ -28,10 +28,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
     public Optional<User> getUserById(Long id){
         return userRepository.findById(id);
     }
-
     public User createUser(UserCreationRequest newUser){
         var user = new User();
         var profile = new Profile();
@@ -51,6 +51,10 @@ public class UserService {
             userRepository.save(u);
         });
         return user;
+    }
+
+    public  Integer sum(int num1, int num2){
+        return  num2+num1;
     }
 
 }
