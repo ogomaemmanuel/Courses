@@ -1,5 +1,6 @@
 package ke.co.safaricom.weblog.blog.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import ke.co.safaricom.weblog.blog.dto.BlogCreateRequest;
 import ke.co.safaricom.weblog.blog.entity.Blog;
 import ke.co.safaricom.weblog.blog.service.BlogService;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/blogs")
+@Tag(name = "Blogs",description = "Create, update, view and delete blog entries")
 public class BlogController {
     private final BlogService blogService;
     public BlogController(BlogService blogService) {

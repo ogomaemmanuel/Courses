@@ -10,10 +10,7 @@ import ke.co.safaricom.weblog.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Key;
@@ -59,7 +56,7 @@ public class AuthenticationController {
         return refreshToken;
     }
 
-    @RequestMapping("/refresh-token")
+    @RequestMapping(value = "/refresh-token",method = RequestMethod.POST)
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         try {
             var jwt = Jwts.parserBuilder()

@@ -7,6 +7,8 @@ import ke.co.safaricom.weblog.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -32,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserCreationRequest newUser){
+    public ResponseEntity<User> createUser(@RequestBody @Valid UserCreationRequest newUser){
         var user = userService.createUser(newUser);
         return ResponseEntity.ok(user);
     }

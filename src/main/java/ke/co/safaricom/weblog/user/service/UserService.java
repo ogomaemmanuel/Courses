@@ -34,12 +34,9 @@ public class UserService {
     }
     public User createUser(UserCreationRequest newUser){
         var user = new User();
-        var profile = new Profile();
-        user.setUsername(newUser.getUsername());
         user.setPassword(newUser.getPassword());
-        profile.setUsername(newUser.getUsername());
+        user.setUsername(newUser.getUsername());
         userRepository.save(user);
-        profileRepository.save(profile);
         return user;
     }
 

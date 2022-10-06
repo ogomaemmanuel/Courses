@@ -2,6 +2,7 @@ package ke.co.safaricom.weblog;
 
 import ke.co.safaricom.weblog.profile.repository.ProfileRepository;
 import ke.co.safaricom.weblog.role.repository.RoleRepository;
+import ke.co.safaricom.weblog.user.dto.UserCreationRequest;
 import ke.co.safaricom.weblog.user.entity.User;
 import ke.co.safaricom.weblog.user.repository.UserRepository;
 import ke.co.safaricom.weblog.user.service.UserService;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -35,6 +37,9 @@ public class UserserviceUnitTest {
     @Mock
     private RoleRepository roleRepositoryMock;
 
+    @Captor
+    ArgumentCaptor<User> userArgumentCaptor;
+
     @Test
     public void testGetAllUser()
     {when(userRepositoryMock.findAll()).thenReturn(new ArrayList<>());
@@ -46,9 +51,24 @@ public class UserserviceUnitTest {
     public void testGetUserById(){
         var user = new User();
         user.setUsername("Test");
-        when(userRepositoryMock.findById(any(Long.class))).thenReturn(Optional.of(user));
+        when(userRepositoryMock.findById(any(Long.class))).thenReturn(Optional.of(user)).thenReturn(Optional.of(new  User()));
         var result=   userService.getUserById(1L);
         verify(userRepositoryMock).findById(anyLong());
         Assertions.assertEquals("Test",result.get().getUsername());
     }
+
+
+
+    @Test
+    public void testAddUser() {
+        UserCreationRequest userCreationRequest= new UserCreationRequest();
+        userCreationRequest.setUsername("test");
+        userCreationRequest.setPassword("test1");
+        when(userRepositoryMock.save(any(User.class))).thenReturn(any(User.class));
+        userService.createUser(userCreationRequest);
+        verify(userRepositoryMock).save(userArgumentCaptor.capture());
+        var savedUser= userArgumentCaptor.getValue();
+        Assertions.assertEquals(savedUser.getUsername(), userCreationRequest.getUsername());
+    }
+
 }
